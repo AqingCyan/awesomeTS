@@ -17,8 +17,17 @@ interface Content {
 }
 
 class DellAnalyzer implements Analyzer {
+  private static instance: DellAnalyzer
+  // 单例模式改造
+  static getInstance() {
+    if (!DellAnalyzer.instance) {
+      DellAnalyzer.instance = new DellAnalyzer()
+    }
+    return DellAnalyzer.instance
+  }
+
   // 内容抽取
-  private getCourseInfo(html: string) {
+  private static getCourseInfo(html: string) {
     const $ = cheerio.load(html)
     const courseItems = $('.course-item')
     const courseInfos: Course[] = []
@@ -35,7 +44,7 @@ class DellAnalyzer implements Analyzer {
   }
 
   // 数据处理成写入的格式
-  generateJsonContent(result: CourseResult, filePath: string) {
+  private static generateJsonContent(result: CourseResult, filePath: string) {
     let fileContent: Content = {}
     if (fs.existsSync(filePath)) {
       fileContent = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
@@ -45,10 +54,12 @@ class DellAnalyzer implements Analyzer {
   }
 
   public analyze(html: string, filePath: string) {
-    const courseInfo = this.getCourseInfo(html)
-    const fileContent = this.generateJsonContent(courseInfo, filePath)
+    const courseInfo = DellAnalyzer.getCourseInfo(html)
+    const fileContent = DellAnalyzer.generateJsonContent(courseInfo, filePath)
     return JSON.stringify(fileContent)
   }
+
+  private constructor() {}
 }
 
 export default DellAnalyzer
