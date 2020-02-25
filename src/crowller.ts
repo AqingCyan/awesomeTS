@@ -33,7 +33,4 @@ class Crowller {
   }
 }
 
-const secret = 'secretKey'
-const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`
-const analyzer = DellAnalyzer.getInstance()
-new Crowller(analyzer, url)
+export default Crowller

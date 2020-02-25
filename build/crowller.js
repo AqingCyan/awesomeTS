@@ -45,7 +45,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var superagent_1 = __importDefault(require("superagent"));
-var dellAnalyzer_1 = __importDefault(require("./dellAnalyzer"));
 var Crowller = /** @class */ (function () {
     function Crowller(analyzer, url) {
         this.analyzer = analyzer;
@@ -86,7 +85,4 @@ var Crowller = /** @class */ (function () {
     };
     return Crowller;
 }());
-var secret = 'secretKey';
-var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;
-var analyzer = dellAnalyzer_1.default.getInstance();
-new Crowller(analyzer, url);
+exports.default = Crowller;
