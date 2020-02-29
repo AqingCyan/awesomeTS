@@ -1,26 +1,24 @@
-// 普通方法，target 对应的是类的 prototype
-// 方法的装饰器，在类创建好的时候就会立马装饰，不用等实例化
-// 静态方法 target 对应的是类的 构造函数 constructor
-// descriptor 可以对属性做一些编辑，类似于 Object.defineProperty
-function getNameDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
-  // console.log(target, key)
+// 访问器装饰器
+// 参数和方法装饰器的参数一样
+function visitDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
   descriptor.writable = false
-  descriptor.value = function () {
-    return 'decorator'
-  }
 }
 
 class Test {
-  name: string
+  private _name: string
   constructor(name: string) {
-    this.name = name
+    this._name = name
   }
-  @getNameDecorator
-  getName() {
-    return this.name
+  get name() {
+    return this._name
+  }
+
+  @visitDecorator
+  set name(name: string) {
+    this._name = name
   }
 }
 
 const test = new Test('cyan')
-// test.getName = () => '123' // descriptor.writable = false 外部无法改变getName方法
-console.log(test.getName())
+test.name = 'aqing' // 因为 descriptor.writable = false 无法修改 会报错
+console.log(test.name)
