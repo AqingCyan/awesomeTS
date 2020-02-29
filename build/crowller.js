@@ -46,9 +46,9 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var superagent_1 = __importDefault(require("superagent"));
 var Crowller = /** @class */ (function () {
-    function Crowller(analyzer, url) {
-        this.analyzer = analyzer;
+    function Crowller(url, analyzer) {
         this.url = url;
+        this.analyzer = analyzer;
         this.filePath = path_1.default.resolve(__dirname, '../data/course.json');
         this.initSpiderProcess();
     }

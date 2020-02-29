@@ -28,7 +28,7 @@ class Crowller {
     this.writeFile(fileContent)
   }
 
-  constructor(private analyzer: Analyzer, private url: string) {
+  constructor(private url: string, private analyzer: Analyzer) {
     this.initSpiderProcess()
   }
 }
