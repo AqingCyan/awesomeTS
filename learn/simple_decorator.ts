@@ -5,22 +5,22 @@
 // 类装饰器的参数是类的构造函数
 // 装饰器从下到上，从右到左执行
 
-function testDecorator(flag: boolean) {
-  if (flag) {
-    return function(constructor: any) {
-      constructor.prototype.getName = () => {
-        console.log('decorator')
-      }
-    }
-  } else {
-    return function (constructor: any) {}
-  }
-}
-
-@testDecorator(true)
-class Test {
-
-}
-
-const test: any = new Test()
+// function testDecorator(flag: boolean) {
+//   if (flag) {
+//     return function(constructor: any) {
+//       constructor.prototype.getName = () => {
+//         console.log('decorator')
+//       }
+//     }
+//   } else {
+//     return function (constructor: any) {}
+//   }
+// }
+//
+// @testDecorator(true)
+// class Test {
+//
+// }
+//
+// const test: any = new Test()
 
