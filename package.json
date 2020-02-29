@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:build": "tsc -w",
     "dev:start": "nodemon node ./build/index.js",
-    "dev": "tsc && concurrently npm:dev:*"
+    "dev": "tsc && concurrently npm:dev:*",
+    "start": "ts-node learn/index.ts"
   },
   "nodemonConfig": {
     "ignore": [
@@ -31,6 +32,7 @@
     "express": "^4.17.1",
     "nodemon": "^2.0.2",
     "superagent": "^5.2.1",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
