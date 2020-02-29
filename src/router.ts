@@ -1,6 +1,8 @@
 import {Request, Response, Router} from 'express'
 import Crowller from './crowller'
 import DellAnalyzer from './dellAnalyzer'
+import fs from 'fs'
+import path from 'path'
 
 // 当描述文件不准确时，我们可以拓展它的类型
 interface RequestWithBody extends Request{
@@ -17,8 +19,9 @@ router.get('/', (req: Request, res: Response) => {
     res.send(`
       <html lang="zh">
         <body>
-          <a href="/getData">爬取内容</a>
-          <a href="/logout">退出</a>
+          <a href="/getData">爬取内容</a><br>
+          <a href="/showData">展示内容</a><br>
+          <a href="/logout">退出</a><br>
         </body>
       </html>
     `)
@@ -68,6 +71,16 @@ router.get('/getData', (req: Request, res: Response) => {
     res.send('getData Success!')
   } else {
     res.send('请登录后爬取')
+  }
+})
+
+router.get('/showData', (req: Request, res: Response) => {
+  try {
+    const position = path.resolve(__dirname, '../data/course.json')
+    const result = fs.readFileSync(position, 'utf8')
+    res.json(JSON.parse(result))
+  } catch (e) {
+    res.send('尚未爬取到内容')
   }
 })
 
