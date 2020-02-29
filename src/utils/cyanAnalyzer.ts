@@ -16,14 +16,14 @@ interface Content {
   [propsName: number]: Course[]
 }
 
-class DellAnalyzer implements Analyzer {
-  private static instance: DellAnalyzer
+class CyanAnalyzer implements Analyzer {
+  private static instance: CyanAnalyzer
   // 单例模式改造
   static getInstance() {
-    if (!DellAnalyzer.instance) {
-      DellAnalyzer.instance = new DellAnalyzer()
+    if (!CyanAnalyzer.instance) {
+      CyanAnalyzer.instance = new CyanAnalyzer()
     }
-    return DellAnalyzer.instance
+    return CyanAnalyzer.instance
   }
 
   // 内容抽取
@@ -54,12 +54,12 @@ class DellAnalyzer implements Analyzer {
   }
 
   public analyze(html: string, filePath: string) {
-    const courseInfo = DellAnalyzer.getCourseInfo(html)
-    const fileContent = DellAnalyzer.generateJsonContent(courseInfo, filePath)
+    const courseInfo = CyanAnalyzer.getCourseInfo(html)
+    const fileContent = CyanAnalyzer.generateJsonContent(courseInfo, filePath)
     return JSON.stringify(fileContent)
   }
 
   private constructor() {}
 }
 
-export default DellAnalyzer
+export default CyanAnalyzer

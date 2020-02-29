@@ -4,14 +4,13 @@
 import fs from 'fs'
 import path from 'path'
 import superagent from 'superagent'
-import DellAnalyzer from './dellAnalyzer'
 
 export interface Analyzer {
   analyze: (html: string, filePath: string) => string
 }
 
 class Crowller {
-  private filePath = path.resolve(__dirname, '../data/course.json')
+  private filePath = path.resolve(__dirname, '../../data/course.json')
 
   private async getRawHtml() {
     const { text } = await superagent.get(this.url)
