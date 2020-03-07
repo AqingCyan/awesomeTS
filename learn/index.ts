@@ -1,24 +1,14 @@
-// 访问器装饰器
-// 参数和方法装饰器的参数一样
-function visitDecorator(target: any, key: string, descriptor: PropertyDescriptor) {
-  descriptor.writable = false
+// 参数装饰器
+// 第一个参数是原型，第二个是方法信息，第三个是参数的序号
+function paramsDecorator(target: any, method: string, paramIndex: number): any {
+  console.log(target, method, paramIndex)
 }
 
 class Test {
-  private _name: string
-  constructor(name: string) {
-    this._name = name
-  }
-  get name() {
-    return this._name
-  }
+  getInfo(@paramsDecorator name: string, age: number) {
 
-  @visitDecorator
-  set name(name: string) {
-    this._name = name
   }
 }
 
-const test = new Test('cyan')
-test.name = 'aqing' // 因为 descriptor.writable = false 无法修改 会报错
-console.log(test.name)
+const test = new Test()
+test.getInfo('Aqing', 21)

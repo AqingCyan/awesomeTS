@@ -117,3 +117,60 @@ const test = new Test('cyan')
 test.name = 'aqing' // 因为 descriptor.writable = false 无法修改 会报错
 console.log(test.name)
 ```
+
+## 属性装饰器
+
+- 可以使用属性装饰器去修改属性的descriptor，需要返回出去去替代属性的descriptor
+- 当我们企图通过构造器去修改属性的值时，其实本质修改的是类prototype上的属性
+- 下面例子中的name = 'Cyan' 实际写在了实例的 test 属性上，要访问被修改的值，可以通过实例的原型获取
+
+```typescript
+function nameDecorator(target: any, key: string): any {
+  return {
+     writable: false,
+  }
+}
+
+class Test {
+  @nameDecorator
+  name = 'Cyan'
+}
+
+const test = new Test()
+test.name = 'aqing' // 报错
+console.log(test.name) // aqing
+```
+
+```typescript
+function nameDecorator(target: any, key: string): any {
+  target[key] = 'aqing'
+}
+
+class Test {
+  @nameDecorator
+  name = 'Cyan'
+}
+
+const test = new Test()
+console.log(test.name) // Cyan
+console.log((test as any).__proto__.name) // aqing
+```
+## 参数装饰器
+
+第一个参数是原型，第二个是方法信息，第三个是参数的序号
+
+```typescript
+function paramsDecorator(target: any, method: string, paramIndex: number): any {
+  console.log(target, method, paramIndex)
+}
+
+class Test {
+  getInfo(@paramsDecorator name: string, age: number) {
+
+  }
+}
+
+const test = new Test()
+test.getInfo('Aqing', 21)
+// Test { getInfo: [Function] } getInfo 0
+```
