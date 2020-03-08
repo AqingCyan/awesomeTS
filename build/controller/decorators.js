@@ -12,10 +12,22 @@ exports.controller = function (target) {
         var path = Reflect.getMetadata('path', target.prototype, key);
         var method = Reflect.getMetadata('method', target.prototype, key);
         var handler = target.prototype[key];
+        var middleware = Reflect.getMetadata('middleware', target.prototype, key);
         if (path && method && handler) {
-            exports.router[method](path, handler);
+            if (middleware) {
+                exports.router[method](path, middleware, handler);
+            }
+            else {
+                exports.router[method](path, handler);
+            }
         }
     }
+};
+// 中间件装饰器
+exports.use = function (middleware) {
+    return function (target, key) {
+        Reflect.defineMetadata('middleware', middleware, target, key);
+    };
 };
 // 生成请求方法装饰器的工厂方法
 var getRequestDecorator = function (type) {

@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { RequestHandler, Router } from 'express'
 
 export const router = Router()
 
@@ -12,12 +12,23 @@ export const controller = (target: any) => {
     const path = Reflect.getMetadata('path', target.prototype, key)
     const method: Method = Reflect.getMetadata('method', target.prototype, key)
     const handler = target.prototype[key]
+    const middleware = Reflect.getMetadata('middleware', target.prototype, key)
     if (path && method && handler) {
-      router[method](path, handler)
+      if (middleware) {
+        router[method](path, middleware, handler)
+      } else {
+        router[method](path, handler)
+      }
     }
   }
 }
 
+// 中间件装饰器
+export const use = (middleware: RequestHandler) => {
+  return (target: any, key: string) => {
+    Reflect.defineMetadata('middleware', middleware, target, key)
+  }
+}
 
 // 生成请求方法装饰器的工厂方法
 const getRequestDecorator = (type: string) => {
