@@ -21,31 +21,7 @@ const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
 
 const router = Router()
 
-router.get('/', (req: BodyRequest, res: Response) => {
-  const isLogin = req.session ? req.session.login : false
-  if (isLogin) {
-    res.send(`
-      <html lang="zh">
-        <body>
-          <a href="/getData">爬取内容</a><br>
-          <a href="/showData">展示内容</a><br>
-          <a href="/logout">退出</a><br>
-        </body>
-      </html>
-    `)
-  } else {
-    res.send(`
-      <html lang="zh">
-        <body>
-        <form method="post" action="/login">
-          <input type="password" name="password" />
-          <button>提交</button>
-        </form>
-        </body>
-      </html>
-    `)
-  }
-})
+router.get('/', () => {})
 
 router.post('/login', (req: BodyRequest, res: Response) => {
   const { password } = req.body
