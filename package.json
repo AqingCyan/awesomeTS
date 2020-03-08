@@ -7,8 +7,7 @@
     "dev:build": "tsc -w",
     "dev:start": "nodemon node ./build/index.js",
     "dev": "tsc && concurrently npm:dev:*",
-    "start": "ts-node learn/index.ts",
-    "test": "tsc && node ./build/controller/loginController.js"
+    "start": "ts-node learn/index.ts"
   },
   "nodemonConfig": {
     "ignore": [
