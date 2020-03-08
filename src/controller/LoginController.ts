@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { Request, Response } from 'express'
-import { controller, get, post } from './decorators'
+import { controller, get, post } from '../decorator'
 import { getResponseData } from "../utils/util"
 
 // 当描述文件不准确时，我们可以拓展它的类型

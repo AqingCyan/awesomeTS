@@ -16,7 +16,7 @@ require("reflect-metadata");
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var util_1 = require("../utils/util");
-var decorators_1 = require("./decorators");
+var decorator_1 = require("../decorator");
 var cyanAnalyzer_1 = __importDefault(require("../utils/cyanAnalyzer"));
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var checkLogin = function (req, res, next) {
@@ -49,21 +49,21 @@ var CrowllerController = /** @class */ (function () {
         }
     };
     __decorate([
-        decorators_1.get('/getData'),
-        decorators_1.use(checkLogin),
+        decorator_1.get('/getData'),
+        decorator_1.use(checkLogin),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "getData", null);
     __decorate([
-        decorators_1.get('/showData'),
-        decorators_1.use(checkLogin),
+        decorator_1.get('/showData'),
+        decorator_1.use(checkLogin),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorators_1.controller
+        decorator_1.controller
     ], CrowllerController);
     return CrowllerController;
 }());

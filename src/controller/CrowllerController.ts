@@ -3,7 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import { NextFunction, Request, Response } from 'express'
 import { getResponseData } from '../utils/util'
-import { controller, get, use } from './decorators'
+import { controller, use, get } from '../decorator'
 import CyanAnalyzer from '../utils/cyanAnalyzer'
 import Crowller from '../utils/crowller'
 
