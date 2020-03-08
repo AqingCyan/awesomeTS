@@ -12,8 +12,8 @@ interface BodyRequest extends Request{
   body: { [key: string]: string | undefined }
 }
 
-const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
-  const isLogin = req.session ? req.session.login : false
+const checkLogin = (req: BodyRequest, res: Response, next: NextFunction): void => {
+  const isLogin: boolean = !!(req.session ? req.session.login : false)
   if (isLogin) {
     next()
   } else {
@@ -21,11 +21,11 @@ const checkLogin = (req: BodyRequest, res: Response, next: NextFunction) => {
   }
 }
 
-@controller
-class CrowllerController {
+@controller('/')
+export class CrowllerController {
   @get('/getData')
   @use(checkLogin)
-  getData(req: BodyRequest, res: Response) {
+  getData(req: BodyRequest, res: Response): void {
     const secret = 'secretKey'
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`
     const analyzer = CyanAnalyzer.getInstance()
@@ -35,7 +35,7 @@ class CrowllerController {
 
   @get('/showData')
   @use(checkLogin)
-  showData(req: BodyRequest, res: Response) {
+  showData(req: BodyRequest, res: Response): void {
     try {
       const position = path.resolve(__dirname, '../../data/course.json')
       const result = fs.readFileSync(position, 'utf8')

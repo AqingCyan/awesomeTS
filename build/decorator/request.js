@@ -6,8 +6,11 @@ var Methods;
     Methods["get"] = "get";
     Methods["post"] = "post";
     Methods["put"] = "put";
-})(Methods || (Methods = {}));
-// 生成请求方法装饰器的工厂方法
+})(Methods = exports.Methods || (exports.Methods = {}));
+/**
+ * 生成请求方法装饰器的工厂方法
+ * @param type {Methods} 请求方法类型
+ */
 var getRequestDecorator = function (type) {
     return function (path) {
         return function (target, key) {

@@ -1,23 +1,26 @@
+import { RequestHandler } from 'express'
 import router from '../router'
+import { Methods } from './request'
 
-enum Methods {
-  get = 'get',
-  post = 'post',
-  put = 'put',
-}
-
-export const controller = (target: any) => {
-  for(let key in target.prototype) {
-    const path = Reflect.getMetadata('path', target.prototype, key)
-    const method: Methods = Reflect.getMetadata('method', target.prototype, key)
-    const handler = target.prototype[key]
-    const middleware = Reflect.getMetadata('middleware', target.prototype, key)
-    if (path && method && handler) {
-      if (middleware) {
-        router[method](path, middleware, handler)
-      } else {
-        router[method](path, handler)
+/**
+ * controller 的装饰器，可以设置 prefix 路径
+ * @param root {String} prefix 路径
+ */
+export const controller = (root: string) => (
+  (target: new (...args: any[]) => any) => {
+    for(let key in target.prototype) {
+      const path: string = Reflect.getMetadata('path', target.prototype, key)
+      const method: Methods = Reflect.getMetadata('method', target.prototype, key)
+      const middleware: RequestHandler = Reflect.getMetadata('middleware', target.prototype, key)
+      const handler: any = target.prototype[key]
+      if (path && method) {
+        const fullPath = root === '/' ? path : `${root}${path}`
+        if (middleware) {
+          router[method](fullPath, middleware, handler)
+        } else {
+          router[method](fullPath, handler)
+        }
       }
     }
   }
-}
+)

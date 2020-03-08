@@ -20,7 +20,7 @@ var decorator_1 = require("../decorator");
 var cyanAnalyzer_1 = __importDefault(require("../utils/cyanAnalyzer"));
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var checkLogin = function (req, res, next) {
-    var isLogin = req.session ? req.session.login : false;
+    var isLogin = !!(req.session ? req.session.login : false);
     if (isLogin) {
         next();
     }
@@ -63,7 +63,8 @@ var CrowllerController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorator_1.controller
+        decorator_1.controller('/')
     ], CrowllerController);
     return CrowllerController;
 }());
+exports.CrowllerController = CrowllerController;

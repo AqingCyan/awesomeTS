@@ -1,15 +1,19 @@
 import 'reflect-metadata'
+import { CrowllerController, LoginController } from '../controller'
 
-enum Methods {
+export enum Methods {
   get = 'get',
   post = 'post',
   put = 'put',
 }
 
-// 生成请求方法装饰器的工厂方法
+/**
+ * 生成请求方法装饰器的工厂方法
+ * @param type {Methods} 请求方法类型
+ */
 const getRequestDecorator = (type: Methods) => {
   return (path: string) => {
-    return (target: any, key: string) => {
+    return (target: CrowllerController | LoginController, key: string) => {
       Reflect.defineMetadata('path', path, target, key)
       Reflect.defineMetadata('method', type, target, key)
     }
