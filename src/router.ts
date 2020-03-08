@@ -23,27 +23,9 @@ const router = Router()
 
 router.get('/', () => {})
 
-router.post('/login', (req: BodyRequest, res: Response) => {
-  const { password } = req.body
-  const isLogin = req.session ? req.session.login : false
-  if (isLogin) {
-    res.json(getResponseData(false, '已经登录过啦'))
-  } else {
-    if (password === '123' && req.session) {
-      req.session.login = true
-      res.json(getResponseData(true))
-    } else {
-      res.json(getResponseData(false, '密码不正确'))
-    }
-  }
-})
+router.post('/login', () => {})
 
-router.get('/logout', (req: BodyRequest, res: Response) => {
-  if (req.session) {
-    req.session.login = undefined
-  }
-  res.json(getResponseData(true))
-})
+router.get('/logout', () => {})
 
 router.get('/getData', checkLogin, (req: BodyRequest, res: Response) => {
   const secret = 'secretKey'

@@ -20,28 +20,8 @@ var checkLogin = function (req, res, next) {
 };
 var router = express_1.Router();
 router.get('/', function () { });
-router.post('/login', function (req, res) {
-    var password = req.body.password;
-    var isLogin = req.session ? req.session.login : false;
-    if (isLogin) {
-        res.json(util_1.getResponseData(false, '已经登录过啦'));
-    }
-    else {
-        if (password === '123' && req.session) {
-            req.session.login = true;
-            res.json(util_1.getResponseData(true));
-        }
-        else {
-            res.json(util_1.getResponseData(false, '密码不正确'));
-        }
-    }
-});
-router.get('/logout', function (req, res) {
-    if (req.session) {
-        req.session.login = undefined;
-    }
-    res.json(util_1.getResponseData(true));
-});
+router.post('/login', function () { });
+router.get('/logout', function () { });
 router.get('/getData', checkLogin, function (req, res) {
     var secret = 'secretKey';
     var url = "http://www.dell-lee.com/typescript/demo.html?secret=" + secret;

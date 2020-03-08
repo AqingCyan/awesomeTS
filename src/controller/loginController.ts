@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { Request, Response } from 'express'
-import { controller, get } from './decorators'
+import { controller, get, post } from './decorators'
 import { getResponseData } from "../utils/util"
 
 // 当描述文件不准确时，我们可以拓展它的类型
@@ -10,6 +10,22 @@ interface BodyRequest extends Request{
 
 @controller
 class LoginController {
+  @post('/login')
+  login(req: BodyRequest, res: Response) {
+    const { password } = req.body
+    const isLogin = req.session ? req.session.login : false
+    if (isLogin) {
+      res.json(getResponseData(false, '已经登录过啦'))
+    } else {
+      if (password === '123' && req.session) {
+        req.session.login = true
+        res.json(getResponseData(true))
+      } else {
+        res.json(getResponseData(false, '密码不正确'))
+      }
+    }
+  }
+
   @get('/logout')
   logout(req: BodyRequest, res: Response) {
     if (req.session) {
