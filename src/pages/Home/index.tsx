@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import axios from 'axios'
 import './style.css'
 
@@ -22,14 +22,28 @@ class Home extends Component<{}, State> {
   componentDidMount() {
     axios.get('/api/isLogin').then((res) => {
       if (!res.data?.data) {
-        console.log('已登录')
+        this.setState({
+          isLogin: false,
+          loaded: true,
+        })
+      } else {
+        this.setState({
+          loaded: true,
+        })
+      }
+    })
+  }
+
+  handleLogoutClick = () => {
+    axios.get('/api/logout').then((res) => {
+      if (res.data?.data) {
         this.setState({
           isLogin: false,
         })
+        message.success('退出登录成功')
+      } else {
+        message.error('退出登录失败')
       }
-      this.setState({
-        loaded: true,
-      })
     })
   }
 
@@ -42,7 +56,12 @@ class Home extends Component<{}, State> {
           <div className="home-page">
             <Button type="primary">爬取内容</Button>
             <Button type="default">展示内容</Button>
-            <Button type="danger">退出登录</Button>
+            <Button
+            type="danger"
+            onClick={this.handleLogoutClick}
+            >
+              退出登录
+            </Button>
           </div>
         )
       }
