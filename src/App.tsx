@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button } from 'antd'
+import { WrappedFormUtils } from 'antd/lib/form/Form'
 import './login.css'
 
-interface Props {
-  form: any
+interface FormFields {
+  password: string
 }
 
-class NormalLoginForm extends Component<Props> {
-  handleSubmit = (e: any) => {
+interface Props {
+  form: WrappedFormUtils<FormFields>
+}
+
+class LoginForm extends Component<Props> {
+  handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    this.props.form.validateFields((err: any, values: any) => {
+    this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
       }
@@ -41,6 +46,6 @@ class NormalLoginForm extends Component<Props> {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm)
+const WrappedLoginForm = Form.create({ name: 'login' })(LoginForm)
 
-export default WrappedNormalLoginForm
+export default WrappedLoginForm
