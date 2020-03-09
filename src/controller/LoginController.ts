@@ -17,7 +17,7 @@ export class LoginController {
   @get('/isLogin')
   isLogin(req: BodyRequest, res: Response): void {
     const isLogin: boolean = LoginController.isLogin(req)
-    res.json(getResponseData(isLogin))
+    res.json(getResponseData<boolean>(isLogin))
   }
 
   @post('/login')
@@ -28,9 +28,9 @@ export class LoginController {
       res.json(getResponseData(true, '已经登录过啦'))
     } else if (password === '123' && req.session) {
       req.session.login = true
-      res.json(getResponseData(true))
+      res.json(getResponseData<boolean>(true))
     } else {
-      res.json(getResponseData(false, '密码不正确'))
+      res.json(getResponseData<boolean>(false, '密码不正确'))
     }
   }
 
@@ -39,32 +39,6 @@ export class LoginController {
     if (req.session) {
       req.session.login = undefined
     }
-    res.json(getResponseData(true))
-  }
-
-  @get('/')
-  home(req: BodyRequest, res: Response): void {
-    const isLogin: boolean = LoginController.isLogin(req)
-    if (isLogin) {
-      res.send(`
-        <html lang="zh">
-          <body>
-            <a href="/getData">爬取内容</a><br>
-            <a href="/showData">展示内容</a><br>
-            <a href="/logout">退出</a><br>
-          </body>
-        </html>
-      `)
-    } else {
-      res.send(`
-        <html lang="zh">
-          <body>
-          <form method="post" action="/login">
-            <input type="password" name="password" />
-            <button>提交</button>
-          </form>
-          </body>
-        </html>`)
-    }
+    res.json(getResponseData<boolean>(true))
   }
 }
