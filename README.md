@@ -1,3 +1,3 @@
-# TS爬虫项目的前端部分
+# TS爬虫项目前端部分
 
-基于 TypeScript 的 React 项目
+基于 TypeScript 的 React 和 antd
