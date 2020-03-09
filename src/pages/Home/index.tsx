@@ -6,19 +6,10 @@ import request from '../../request'
 import moment from 'moment'
 import './style.css'
 
-interface CourseItem {
-  title: string
-  count: number
-}
-
-interface DataStructor {
-  [key: string]: CourseItem[]
-}
-
 interface State {
   isLogin: boolean
   loaded: boolean
-  data: DataStructor
+  data: responseResult.DataStructor
 }
 
 // 可以传入两个范型分别指定props和state的类型
@@ -34,7 +25,7 @@ class Home extends Component<{}, State> {
 
   componentDidMount() {
     request.get('/api/isLogin').then((res) => {
-      const data: boolean = res.data
+      const data: responseResult.isLogin = res.data
       if (!data) {
         this.setState({
           isLogin: false,
@@ -48,7 +39,7 @@ class Home extends Component<{}, State> {
     })
 
     request.get('/api/showData').then((res) => {
-      const data: DataStructor = res.data
+      const data: responseResult.DataStructor = res.data
       if (data) {
         this.setState({
           data: res.data,
@@ -59,7 +50,7 @@ class Home extends Component<{}, State> {
 
   handleLogoutClick = () => {
     request.get('/api/logout').then((res) => {
-      const data: boolean = res.data
+      const data: responseResult.logout = res.data
       if (data) {
         this.setState({
           isLogin: false,
@@ -73,7 +64,7 @@ class Home extends Component<{}, State> {
 
   handleCrowllerClick = () => {
     request.get('/api/getData').then((res) => {
-      const data: boolean = res.data
+      const data: responseResult.getData = res.data
       if (data) {
         message.success('爬取成功')
       } else {
