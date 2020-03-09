@@ -11,14 +11,14 @@ export enum Methods {
  * 生成请求方法装饰器的工厂方法
  * @param type {Methods} 请求方法类型
  */
-const getRequestDecorator = (type: Methods) => {
-  return (path: string) => {
-    return (target: CrowllerController | LoginController, key: string) => {
+const getRequestDecorator = (type: Methods) => (
+  (path: string) => (
+    (target: CrowllerController | LoginController, key: string) => {
       Reflect.defineMetadata('path', path, target, key)
       Reflect.defineMetadata('method', type, target, key)
     }
-  }
-}
+  )
+)
 
 export const get = getRequestDecorator(Methods.get)
 export const post = getRequestDecorator(Methods.post)

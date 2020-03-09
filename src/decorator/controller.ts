@@ -8,7 +8,7 @@ import { Methods } from './request'
  */
 export const controller = (root: string) => (
   (target: new (...args: any[]) => any) => {
-    for(let key in target.prototype) {
+    for (const key in target.prototype) {
       const path: string = Reflect.getMetadata('path', target.prototype, key)
       const method: Methods = Reflect.getMetadata('method', target.prototype, key)
       const middlewares: RequestHandler[] = Reflect.getMetadata('middlewares', target.prototype, key)
