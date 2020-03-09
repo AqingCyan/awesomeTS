@@ -25,9 +25,11 @@ class Home extends Component<{}, State> {
         console.log('已登录')
         this.setState({
           isLogin: false,
-          loaded: true,
         })
       }
+      this.setState({
+        loaded: true,
+      })
     })
   }
 
