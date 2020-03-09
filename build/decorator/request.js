@@ -11,13 +11,9 @@ var Methods;
  * 生成请求方法装饰器的工厂方法
  * @param type {Methods} 请求方法类型
  */
-var getRequestDecorator = function (type) {
-    return function (path) {
-        return function (target, key) {
-            Reflect.defineMetadata('path', path, target, key);
-            Reflect.defineMetadata('method', type, target, key);
-        };
-    };
-};
+var getRequestDecorator = function (type) { return (function (path) { return (function (target, key) {
+    Reflect.defineMetadata('path', path, target, key);
+    Reflect.defineMetadata('method', type, target, key);
+}); }); };
 exports.get = getRequestDecorator(Methods.get);
 exports.post = getRequestDecorator(Methods.post);

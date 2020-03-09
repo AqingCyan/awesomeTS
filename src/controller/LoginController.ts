@@ -8,10 +8,16 @@ interface BodyRequest extends Request{
   body: { [key: string]: string | undefined }
 }
 
-@controller('/')
+@controller('/api')
 export class LoginController {
   static isLogin(req: BodyRequest): boolean {
     return !!(req.session ? req.session.login : false)
+  }
+
+  @get('/isLogin')
+  isLogin(req: BodyRequest, res: Response): void {
+    const isLogin: boolean = LoginController.isLogin(req)
+    res.json(getResponseData(isLogin))
   }
 
   @post('/login')
@@ -19,14 +25,12 @@ export class LoginController {
     const { password } = req.body
     const isLogin: boolean = LoginController.isLogin(req)
     if (isLogin) {
-      res.json(getResponseData(false, '已经登录过啦'))
+      res.json(getResponseData(true, '已经登录过啦'))
+    } else if (password === '123' && req.session) {
+      req.session.login = true
+      res.json(getResponseData(true))
     } else {
-      if (password === '123' && req.session) {
-        req.session.login = true
-        res.json(getResponseData(true))
-      } else {
-        res.json(getResponseData(false, '密码不正确'))
-      }
+      res.json(getResponseData(false, '密码不正确'))
     }
   }
 
