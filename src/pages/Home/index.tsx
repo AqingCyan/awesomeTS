@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Button, message } from 'antd'
 import ReactEcharts from 'echarts-for-react'
-import axios from 'axios'
+import request from '../../request'
 import moment from 'moment'
 import './style.css'
 
@@ -11,18 +11,14 @@ interface CourseItem {
   count: number
 }
 
+interface DataStructor {
+  [key: string]: CourseItem[]
+}
+
 interface State {
   isLogin: boolean
   loaded: boolean
-  data: {
-    [key: string]: CourseItem[]
-  }
-}
-
-interface LineData {
-  name: string
-  type: string
-  data: number[]
+  data: DataStructor
 }
 
 // 可以传入两个范型分别指定props和state的类型
@@ -37,8 +33,9 @@ class Home extends Component<{}, State> {
   }
 
   componentDidMount() {
-    axios.get('/api/isLogin').then((res) => {
-      if (!res.data?.data) {
+    request.get('/api/isLogin').then((res) => {
+      const data: boolean = res.data
+      if (!data) {
         this.setState({
           isLogin: false,
           loaded: true,
@@ -50,18 +47,20 @@ class Home extends Component<{}, State> {
       }
     })
 
-    axios.get('/api/showData').then((res) => {
-      if (res.data?.data) {
+    request.get('/api/showData').then((res) => {
+      const data: DataStructor = res.data
+      if (data) {
         this.setState({
-          data: res.data.data,
+          data: res.data,
         })
       }
     })
   }
 
   handleLogoutClick = () => {
-    axios.get('/api/logout').then((res) => {
-      if (res.data?.data) {
+    request.get('/api/logout').then((res) => {
+      const data: boolean = res.data
+      if (data) {
         this.setState({
           isLogin: false,
         })
@@ -73,8 +72,9 @@ class Home extends Component<{}, State> {
   }
 
   handleCrowllerClick = () => {
-    axios.get('/api/getData').then((res) => {
-      if (res.data?.data) {
+    request.get('/api/getData').then((res) => {
+      const data: boolean = res.data
+      if (data) {
         message.success('爬取成功')
       } else {
         message.error('爬取失败')
@@ -98,7 +98,7 @@ class Home extends Component<{}, State> {
         tempData[title] ? tempData[title].push(count) : (tempData[title] = [count])
       })
     }
-    const result: LineData[] = []
+    const result: echarts.EChartOption.Series[] = []
     for (let i in tempData) {
       result.push({
         name: i,

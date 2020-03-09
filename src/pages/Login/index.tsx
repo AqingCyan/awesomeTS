@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button, message } from 'antd'
-import axios from 'axios'
+import request from '../../request'
 import { Redirect } from 'react-router-dom'
 import qs from 'qs'
 import { WrappedFormUtils } from 'antd/lib/form/Form'
@@ -23,14 +23,15 @@ class LoginForm extends Component<Props> {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        axios.post('/api/login', qs.stringify({
+        request.post('/api/login', qs.stringify({
           password: values.password,
         }), {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           }
         }).then((res) => {
-          if (res.data?.data) {
+          const data: boolean = res.data
+          if (data) {
             this.setState({
               isLogin: true,
             })
