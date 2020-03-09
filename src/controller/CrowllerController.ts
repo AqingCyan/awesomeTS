@@ -21,12 +21,12 @@ const checkLogin = (req: BodyRequest, res: Response, next: NextFunction): void =
   }
 }
 
-@controller('/')
+@controller('/api')
 export class CrowllerController {
   @get('/getData')
   @use(checkLogin)
   getData(req: BodyRequest, res: Response): void {
-    const secret = 'secretKey'
+    const secret = 'x3b174jsx'
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`
     const analyzer = CyanAnalyzer.getInstance()
     new Crowller(url, analyzer)

@@ -1,6 +1,6 @@
-import cheerio from "cheerio"
-import fs from "fs"
-import { Analyzer } from "./crowller"
+import cheerio from 'cheerio'
+import fs from 'fs'
+import { Analyzer } from './crowller'
 
 interface Course {
   title: string
@@ -18,6 +18,7 @@ interface Content {
 
 class CyanAnalyzer implements Analyzer {
   private static instance: CyanAnalyzer
+
   // 单例模式改造
   static getInstance() {
     if (!CyanAnalyzer.instance) {
@@ -31,6 +32,7 @@ class CyanAnalyzer implements Analyzer {
     const $ = cheerio.load(html)
     const courseItems = $('.course-item')
     const courseInfos: Course[] = []
+    // eslint-disable-next-line array-callback-return
     courseItems.map((index, element) => {
       const descs = $(element).find('.course-desc')
       const title = descs.eq(0).text()
@@ -59,6 +61,7 @@ class CyanAnalyzer implements Analyzer {
     return JSON.stringify(fileContent)
   }
 
+  // eslint-disable-next-line no-useless-constructor,no-empty-function
   private constructor() {}
 }
 
